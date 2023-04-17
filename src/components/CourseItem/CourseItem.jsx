@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { useLocation } from "react-router-dom";
 import { MdOutlinePlayLesson } from "react-icons/md";
 import { FcRating } from "react-icons/fc";
 import VideoJS from "../VideoJS/VideoJS";
@@ -13,7 +14,7 @@ import {
   StyledSkillItem,
   SkillsList,
 } from "./CourseItem.styled";
-import { useLocation } from "react-router-dom";
+
 const CourseItem = ({ course }) => {
   const playerRef = useRef(null);
   const location = useLocation();
@@ -79,7 +80,7 @@ const CourseItem = ({ course }) => {
               <SkillsList>
                 {meta?.skills?.map((skill, i) => {
                   return (
-                    <StyledSkillItem key={i}>
+                    <StyledSkillItem key={`${i}_${skill}`}>
                       <p>{skill}</p>
                     </StyledSkillItem>
                   );

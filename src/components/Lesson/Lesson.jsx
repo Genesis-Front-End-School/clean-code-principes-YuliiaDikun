@@ -43,8 +43,7 @@ const Lesson = ({ lesson, i, openLesson, toggleLessonVideo }) => {
   }, [duration, lessonTime]);
 
   const handlePlayerReady = (player) => {
-    playerRef.current = player;
-    console.log(lessonTime);
+    playerRef.current = player;    
     player.currentTime(lessonTime);
     function getTime() {
       localStorage.setItem(

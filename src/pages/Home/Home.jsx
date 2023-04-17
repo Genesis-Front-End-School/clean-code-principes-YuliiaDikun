@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Container } from "../../components/SharedLayout/SharedLayout.styled";
+import { useSearchParams } from "react-router-dom";
 import { getCourses } from "../../services/genesisAPI";
+import { Container } from "../../components/SharedLayout/SharedLayout.styled";
 import Logo from "../../components/Logo/Logo";
 import CourseItem from "../../components/CourseItem/CourseItem";
 import Loader from "../../components/Loader/Loader";
 import Pagination from "../../components/Pagination/Pagination";
 import { StyledSection, MainTitle, StyledList } from "./Home.styled";
 import { toast } from "react-toastify";
-import { useSearchParams } from "react-router-dom";
 
 const PAGE_SIZE = 10;
 const Home = () => {

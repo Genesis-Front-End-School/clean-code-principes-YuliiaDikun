@@ -4,12 +4,12 @@ import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
-
 import {
   PaginationContainer,
   PaginationItem,
   StyledDOTS,
 } from "./Pagination.styled";
+
 const Pagination = ({
   onPageChange,
   totalCount,
@@ -35,7 +35,7 @@ const Pagination = ({
     onPageChange(currentPage - 1);
   };
 
-  let lastPage = paginationRange[paginationRange.length - 1];
+  const lastPage = paginationRange[paginationRange.length - 1];
 
   return (
     <PaginationContainer>

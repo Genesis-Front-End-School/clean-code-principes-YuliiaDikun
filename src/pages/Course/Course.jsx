@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
-import { useParams, useLocation } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { getCourseById } from "../../services/genesisAPI";
 import Lesson from "../../components/Lesson/Lesson";
 import Loader from "../../components/Loader/Loader";
@@ -16,12 +15,13 @@ import {
   StyledProductTitle,
   StyledP,
 } from "./Course.styled";
-
+import { toast } from "react-toastify";
 const Course = () => {
   const [course, setCourse] = useState(null);
   const [openLesson, setOpenLesson] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
+  const navigate = useNavigate();
   const location = useLocation();
   const backLinkHref = location.state?.from ?? "/";
 
@@ -38,12 +38,13 @@ const Course = () => {
         setCourse(res);
       } catch (error) {
         toast.error(error.message);
+        navigate("/");
       } finally {
         setIsLoading(false);
       }
     };
     getResults();
-  }, [id]);
+  }, [id, navigate]);
 
   const toggleLessonVideo = (lessonId) => {
     setOpenLesson((prevId) => {

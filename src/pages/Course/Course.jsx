@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { useParams, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { getCourseById } from "../../services/genesisAPI";
 import Lesson from "../../components/Lesson/Lesson";
 import Loader from "../../components/Loader/Loader";

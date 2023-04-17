@@ -7,10 +7,9 @@ import Loader from "../../components/Loader/Loader";
 import Pagination from "../../components/Pagination/Pagination";
 import { StyledSection, MainTitle, StyledList } from "./Home.styled";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useSearchParams } from "react-router-dom";
 
-let pageSize = 10;
+const PAGE_SIZE = 10;
 const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [courses, setCourses] = useState([]);
@@ -38,8 +37,8 @@ const Home = () => {
   };
 
   const currentCourseData = useMemo(() => {
-    const firstPageIndex = (page - 1) * pageSize;
-    const lastPageIndex = firstPageIndex + pageSize;
+    const firstPageIndex = (page - 1) * PAGE_SIZE;
+    const lastPageIndex = firstPageIndex + PAGE_SIZE;
     return courses.slice(firstPageIndex, lastPageIndex);
   }, [page, courses]);
 
@@ -58,7 +57,7 @@ const Home = () => {
         <Pagination
           currentPage={Number(page)}
           totalCount={courses.length}
-          pageSize={pageSize}
+          pageSize={PAGE_SIZE}
           onPageChange={(page) => updateQueryString(page)}
         />
       </Container>

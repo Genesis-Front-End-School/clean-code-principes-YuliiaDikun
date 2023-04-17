@@ -20,13 +20,13 @@ const Lesson = ({ lesson, i, openLesson, toggleLessonVideo }) => {
   const [progressBarStyles, setProgressBarStyles] = useState({
     width: "0%",
     backgroundColor: "transparent",
-  }); 
- 
-  const lessonsFromLocalStorage =
-    JSON.parse(localStorage.getItem("lessons")) ?? {};  
+  });
 
-  const lessonTime = lessonsFromLocalStorage[openLesson] || 0; 
-  
+  const lessonsFromLocalStorage =
+    JSON.parse(localStorage.getItem("lessons")) ?? {};
+
+  const lessonTime = lessonsFromLocalStorage[openLesson] || 0;
+
   const isLocked = status === "locked";
   const isVideoAvailable = isLocked ? "locked" : id;
   const open = openLesson === id;
@@ -37,7 +37,7 @@ const Lesson = ({ lesson, i, openLesson, toggleLessonVideo }) => {
       boxShadow: "0px 1px 8px rgba(204, 131, 36, 0.5)",
     };
     let progressVideo = (lessonTime / duration) * 100;
-    
+
     updatedProgressBarStyles.width = `${progressVideo}%`;
     setProgressBarStyles(updatedProgressBarStyles);
   }, [duration, lessonTime]);
@@ -46,16 +46,15 @@ const Lesson = ({ lesson, i, openLesson, toggleLessonVideo }) => {
     playerRef.current = player;
     console.log(lessonTime);
     player.currentTime(lessonTime);
-    function getTime () {       
+    function getTime() {
       localStorage.setItem(
         "lessons",
-        JSON.stringify({   
+        JSON.stringify({
           ...lessonsFromLocalStorage,
           [`${openLesson}`]: player.cache_.currentTime,
         })
       );
-  
-    }         
+    }
 
     player.on("timeupdate", throttle(getTime, 1000));
 
@@ -90,13 +89,13 @@ const Lesson = ({ lesson, i, openLesson, toggleLessonVideo }) => {
       <VideoWrapper open>
         {open && (
           <>
-          <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
-          <ProgressBarContainer>
-          <ProgressBar style={{ ...progressBarStyles }}></ProgressBar>
+            <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+            <ProgressBarContainer>
+              <ProgressBar style={{ ...progressBarStyles }} />
             </ProgressBarContainer>
-            </>
+          </>
         )}
-      </VideoWrapper>      
+      </VideoWrapper>
     </VideoItem>
   );
 };

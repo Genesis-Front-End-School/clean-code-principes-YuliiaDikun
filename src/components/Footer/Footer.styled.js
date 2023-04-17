@@ -15,7 +15,7 @@ export const StyledFooter = styled.footer`
   }
 `;
 
-export const StyledP = styled.p`
+export const StyledParagraph = styled.p`
   margin-bottom: ${({ theme }) => theme.spacing(4)};
   font-size: ${({ theme }) => theme.fontSizes.medium};
   font-weight: 500;

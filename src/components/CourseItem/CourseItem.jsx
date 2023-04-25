@@ -14,7 +14,7 @@ import {
 } from "./CourseItem.styled";
 
 
-const CourseItem = ({ course }) => {
+const CourseItem = ({ course }) => {  
   const playerRef = useRef(null);
   const location = useLocation();
   const { id, previewImageLink, title, lessonsCount, meta, rating } = course;

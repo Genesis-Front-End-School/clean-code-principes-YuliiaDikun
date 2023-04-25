@@ -4,11 +4,12 @@ import wiseyAPI from "../../services/genesisAPI";
 import { sortedByDate } from "../../helpers";
 import { Container } from "../../components/SharedLayout/SharedLayout.styled";
 import Logo from "../../components/Logo/Logo";
-import CourseItem from "../../components/CourseItem/CourseItem";
+import CourseList from "../../components/CourseList/CourseList";
 import Loader from "../../components/Loader/Loader";
 import Pagination from "../../components/Pagination/Pagination";
-import { StyledSection, MainTitle, StyledList } from "./Home.styled";
+import { StyledSection, MainTitle } from "./Home.styled";
 import { toast } from "react-toastify";
+
 
 const PAGE_SIZE = 10;
 const Home = () => {
@@ -50,11 +51,7 @@ const Home = () => {
         <MainTitle>
           <Logo /> - Learning has never been more convenient!
         </MainTitle>
-        <StyledList>
-          {currentCourseData.map((course) => {
-            return <CourseItem key={course.id} course={course} />;
-          })}
-        </StyledList>
+        <CourseList memoCourses={currentCourseData}/>       
         <Pagination
           currentPage={Number(page)}
           totalCount={courses.length}

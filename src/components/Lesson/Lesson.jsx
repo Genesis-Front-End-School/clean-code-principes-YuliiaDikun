@@ -29,7 +29,7 @@ const Lesson = ({ lesson, i, openLesson, toggleLessonVideo }) => {
 
   const isLocked = status === "locked";
   const isVideoAvailable = isLocked ? "locked" : id;
-  const open = openLesson === id;
+  const isOpen = openLesson === id;
 
   useEffect(() => {
     const updatedProgressBarStyles = {
@@ -83,10 +83,10 @@ const Lesson = ({ lesson, i, openLesson, toggleLessonVideo }) => {
           {i + 1}. {title}
           {isLocked && <ImBlocked color="red" size={15} />}
         </LessonTitle>
-        <StyledOpenSpan clicked={open}>+</StyledOpenSpan>
+        <StyledOpenSpan clicked={isOpen}>+</StyledOpenSpan>
       </LessonTextWrapper>
       <VideoWrapper open>
-        {open && (
+        {isOpen && (
           <>
             <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
             <ProgressBarContainer>

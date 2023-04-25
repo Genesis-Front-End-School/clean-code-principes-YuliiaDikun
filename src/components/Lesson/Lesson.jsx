@@ -11,7 +11,7 @@ import {
   ProgressBarContainer,
   ProgressBar,
 } from "./Lesson.styled";
-import videojs from "video.js";
+
 const Lesson = ({ lesson, i, openLesson, toggleLessonVideo }) => {
   const { id, title, status, link, previewImageLink, order, duration } = lesson;
 
@@ -20,6 +20,7 @@ const Lesson = ({ lesson, i, openLesson, toggleLessonVideo }) => {
   const [progressBarStyles, setProgressBarStyles] = useState({
     width: "0%",
     backgroundColor: "transparent",
+    boxShadow: "0px 1px 8px rgba(36, 204, 44, 0.5)",
   });
 
   const lessonsFromLocalStorage =
@@ -33,8 +34,7 @@ const Lesson = ({ lesson, i, openLesson, toggleLessonVideo }) => {
 
   useEffect(() => {
     const updatedProgressBarStyles = {
-      backgroundColor: "green",
-      boxShadow: "0px 1px 8px rgba(204, 131, 36, 0.5)",
+      backgroundColor: "green",      
     };
     let progressVideo = (lessonTime / duration) * 100;
 
@@ -55,11 +55,7 @@ const Lesson = ({ lesson, i, openLesson, toggleLessonVideo }) => {
       );
     }
 
-    player.on("timeupdate", throttle(getTime, 1000));
-
-    player.on("dispose", () => {
-      videojs.log("player will dispose");
-    });
+    player.on("timeupdate", throttle(getTime, 1000));   
   };
 
   const videoJsOptions = {

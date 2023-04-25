@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import { getCourseById } from "../../services/genesisAPI";
+import wiseyAPI from "../../services/genesisAPI";
 import Lesson from "../../components/Lesson/Lesson";
 import Loader from "../../components/Loader/Loader";
-import { StyledSkils } from "../../components/CourseItem/CourseItem.styled";
+import Skill from "../../components/Skill/Skill";
 import { Container } from "../../components/SharedLayout/SharedLayout.styled";
 import {
   StyledSection,
@@ -16,6 +16,7 @@ import {
   StyledP,
 } from "./Course.styled";
 import { toast } from "react-toastify";
+
 const Course = () => {
   const [course, setCourse] = useState(null);
   const [openLesson, setOpenLesson] = useState("");
@@ -26,15 +27,12 @@ const Course = () => {
   const backLinkHref = location.state?.from ?? "/";
 
   const { id } = useParams();
+  wiseyAPI.courseID = id;
 
   useEffect(() => {
     const getResults = async () => {
       try {
-        const res = await getCourseById(id);
-        const firstLesson = res.lessons[0];
-        if (firstLesson.status === "unlocked") {
-          setOpenLesson(firstLesson.id);
-        }
+        const res = await wiseyAPI.getCourseById();
         setCourse(res);
       } catch (error) {
         toast.error(error.message);
@@ -43,8 +41,16 @@ const Course = () => {
         setIsLoading(false);
       }
     };
-    getResults();
+    getResults();    
   }, [id, navigate]);
+
+  useEffect(() => { 
+    if (!course) return;
+    const firstLesson = course.lessons[0];
+    if (firstLesson.status === "unlocked") {
+      setOpenLesson(firstLesson.id);
+    }
+  }, [course])
 
   const toggleLessonVideo = (lessonId) => {
     setOpenLesson((prevId) => {
@@ -54,59 +60,45 @@ const Course = () => {
       if (lessonId === "locked") {
         toast.error("Current video is locked");
         return "";
-      } else {
-        return lessonId;
       }
+      return lessonId;
     });
   };
 
-  if (!course) return null;
+  if (!course) return <Loader />;
 
   return (
     <StyledSection>
       <Container>
-        { isLoading && <Loader/>}
+        {isLoading && <Loader />}
         <GoBackLink to={backLinkHref}>
           <MdOutlineArrowBackIosNew size={20} /> Back to courses
-        </GoBackLink>       
-          <StyledCourse>
-            <ImgWrapper>
-              <img
-                src={`${course.previewImageLink}/cover.webp`}
-                alt={course.title}
-              />
-            </ImgWrapper>
-            <DescrWrapper>
-              <StyledProductTitle>{course.title}</StyledProductTitle>
-              {course.meta.skills ? (
-                <div>
-                  <StyledP>{course.description}</StyledP>
-                  <StyledSkils>Course skills:</StyledSkils>
-                  <ul>
-                    {course.meta?.skills?.map((skill, i) => {
-                      return (
-                        <li key={i}>
-                          <StyledP>{skill}</StyledP>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              ) : (
-                <StyledSkils>Please help us to attract new skills!</StyledSkils>
-              )}
-            </DescrWrapper>
-          </StyledCourse>        
+        </GoBackLink>
+        <StyledCourse>
+          <ImgWrapper>
+            <img
+              src={`${course.previewImageLink}/cover.webp`}
+              alt={course.title}
+            />
+          </ImgWrapper>
+          <DescrWrapper>
+            <StyledProductTitle>{course.title}</StyledProductTitle>
+            <StyledP>{course.description}</StyledP>
+            <Skill skills={ course.meta?.skills} />
+          </DescrWrapper>
+        </StyledCourse>
         <h3>Course Lessons: </h3>
         <ul>
           {course.lessons?.map((lesson, i) => {
-           return <Lesson
-              key={lesson.id}
-              lesson={lesson}
-              i={i}
-              openLesson={openLesson}
-              toggleLessonVideo={toggleLessonVideo }
-            />;
+            return (
+              <Lesson
+                key={lesson.id}
+                lesson={lesson}
+                i={i}
+                openLesson={openLesson}
+                toggleLessonVideo={toggleLessonVideo}
+              />
+            );
           })}
         </ul>
       </Container>

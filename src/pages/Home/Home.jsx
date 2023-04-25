@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { getCourses } from "../../services/genesisAPI";
+import wiseyAPI from "../../services/genesisAPI";
+import { sortedByDate } from "../../helpers";
 import { Container } from "../../components/SharedLayout/SharedLayout.styled";
 import Logo from "../../components/Logo/Logo";
 import CourseItem from "../../components/CourseItem/CourseItem";
@@ -19,9 +20,9 @@ const Home = () => {
   useEffect(() => {
     const getResults = async () => {
       try {
-        const res = await getCourses();        
-        res.courses.sort((a, b) => Date.parse(a) - Date.parse(b));
-        setCourses(res.courses);
+        const {courses} = await wiseyAPI.getCourses();        
+        const sortedCourses = sortedByDate(courses);
+        setCourses(sortedCourses);
       } catch (error) {
         toast.error(error.message);
       } finally {

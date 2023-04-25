@@ -3,17 +3,16 @@ import { useLocation } from "react-router-dom";
 import { MdOutlinePlayLesson } from "react-icons/md";
 import { FcRating } from "react-icons/fc";
 import VideoJS from "../VideoJS/VideoJS";
+import Skill from "../Skill/Skill";
 import {
   StyledItem,
   CourseWrapper,
   ImgWrapper,
   DescWrapper,
   CourseText,
-  RatingWrapper,
-  StyledSkils,
-  StyledSkillItem,
-  SkillsList,
+  RatingWrapper,  
 } from "./CourseItem.styled";
+
 
 const CourseItem = ({ course }) => {
   const playerRef = useRef(null);
@@ -74,22 +73,7 @@ const CourseItem = ({ course }) => {
               Rating: <span>{rating.toFixed(1)} </span> <FcRating size={20} />
             </p>
           </RatingWrapper>
-          {meta.skills ? (
-            <div>
-              <StyledSkils>Course skills:</StyledSkils>
-              <SkillsList>
-                {meta?.skills?.map((skill, i) => {
-                  return (
-                    <StyledSkillItem key={`${i}_${skill}`}>
-                      <p>{skill}</p>
-                    </StyledSkillItem>
-                  );
-                })}
-              </SkillsList>
-            </div>
-          ) : (
-            <StyledSkils>Please help us to attract new skills!</StyledSkils>
-          )}
+          <Skill skills={ meta.skills} />          
         </DescWrapper>
       </CourseWrapper>
     </StyledItem>

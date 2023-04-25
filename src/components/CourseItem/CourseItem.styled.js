@@ -70,18 +70,3 @@ export const RatingWrapper = styled.div`
     color: ${({ theme }) => theme.colors.accent};
   }
 `;
-
-export const StyledSkils = styled.p`
-  padding-top: ${({ theme }) => theme.spacing(3)};
-  padding-bottom: ${({ theme }) => theme.spacing(3)};
-  font-size: ${({ theme }) => theme.spacing(5)};
-  font-weight: 500;
-  color: ${({ theme }) => theme.colors.accent};
-`;
-
-export const SkillsList = styled.ul`
-  padding-left: ${({ theme }) => theme.spacing(5)};
-`;
-export const StyledSkillItem = styled.li`
-  list-style: circle;
-`;
